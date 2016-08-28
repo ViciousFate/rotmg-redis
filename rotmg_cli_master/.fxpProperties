@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fxpProperties abbreviated="false" authoringTool="Flex Builder" compiles="true" parentProject="5fae9dab-e672-4abf-8c9a-6de49d04a9c6" projectUUID="5fae9dab-e672-4abf-8c9a-6de49d04a9c6" pureCatalystProject="false" sdkVersion="4.6.0" uuid="66569a0b-1668-4ff4-9055-ed5803cceab5" version="15">
+  <projects/>
+  <src/>
+  <swc>
+    <linked location="sdkPlaceHolder" path="sdkPlaceHolder" position="0" uuid="66569a0b-1668-4ff4-9055-ed5803cceab5"/>
+    <linked location="C:/Users/cjpee_000/Adobe Flash Builder 4.7/Rotmg123.5.1/libs" path="/libs" position="1" uuid="5e73f2c6-5d5f-4d09-9f20-4e67a785c953"/>
+  </swc>
+  <misc/>
+  <theme/>
+  <mxmlFormattingPrefs groupAttributesByState="true" maxLineWidth="100" mxmlAlignAttributes="true" mxmlAttributeOrder="id,userLabel,includeIn,excludeFrom,visible,x,y,z,left,right,top,bottom,width,height,minWidth,minHeight,maxWidth,maxHeight,label" mxmlKeepAttributeValuesOrganized="true"/>
+</fxpProperties>

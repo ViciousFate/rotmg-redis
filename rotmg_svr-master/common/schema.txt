@@ -1,0 +1,71 @@
+﻿nextAccId
+login : {
+    uuid : salt + SHA1(password + salt) + accId
+}
+names {
+	name : accId
+}
+account.(accId) {
+    uuid
+	name
+	admin
+	nameChosen
+	verified
+	guildId
+	guildRank
+	vaultCount
+	maxCharSlot
+	regTime
+	guest
+	fame
+	totalFame
+	credits
+	totalCredits
+	nextCharId
+}
+classStats.(accId) {
+	objType : bestLv + bestFame
+}
+regLock
+nameLock
+lock.(accId)
+alive.(accId) {
+	chrId
+}
+dead.(accId) {
+	chrId
+}
+char.(accId).(id) {
+	charType
+	level
+	exp
+	fame
+	items
+	hp
+	mp
+	stats
+	tex1
+	tex2
+	pet
+	fameStats
+	createTime
+	lastSeen
+	dead
+}
+death.(accId).(id) {
+	objType
+	level
+	totalFame
+	killer
+	firstBorn
+	deathTime
+}
+news {
+	date : icon + title + text + link
+}
+vault.(accId) {
+	items
+}
+legends {
+	time : fame + accId + chrId
+}

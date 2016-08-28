@@ -1,0 +1,12 @@
+﻿V	central chat broadcast
+V	remote texture
+V	move to a better db
+V	make client independent of account
+V	inter-server talk
+	projectile tolerance
+	load testing
+	events
+	dungeon
+	pets/dye
+	guild
+	oryx

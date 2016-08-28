@@ -1,0 +1,21 @@
+old skul
+
+fix dyes V
+fix vault
+add realm portal V
+fix death screen V
+add pets
+disable right click
+fix register (uesrname) V 
+fix login (Username -> Email) V
+remove idle timer V
+fix music/sound effects V
+remove GA V
+add portal opening message V
+rename all xmls to make sense
+remove ANYTHING to do with kabam steam and kong... (ad wise) V
+fix nexusing, in nexus... V
+remove admin and add ranks
+disable guest account, this is a private server, cmon.
+fixed @Connection failed Rettying! for ever looooooooooop V (kinda...)
+fix all client and server warning(aiming for atleast < 50 for both)

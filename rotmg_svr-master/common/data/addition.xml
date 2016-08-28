@@ -1,0 +1,875 @@
+<Addition>
+  <!--    
+    Note that the client should support 2 byte tile id, but the protocol doesn't support
+    Due to the same reason, some kind of object can only be within signed part because
+    the client read them as signed short then cast to int, making them becomes negative
+    number:
+      Character: UpdatePacket -> Signed
+           Item: ObjectStats  -> Full    BUT if it creates projectile (e.g. spell, quiver) THEN ShootPacket -> Signed
+    Environment: UpdatePacket -> Signed
+     Projectile: Client side  -> Full
+        Textile: ObjectStats  -> Full
+    Auto assign feature takes care of the limitations.
+    
+    Also to use remote texture, the client should have Parameters._-IO call patch to
+    true in assembleegameclient.objects._-ZH and the texture should stored in 32 bits
+    png format.
+    
+    And remember add 'ext' attributes
+    
+    Available Tile IDs : 
+    08 09 0a 0b 0d 0e 0f
+    10 11 12
+    20 27 28 29 2a 2b
+    37 38 39 3a 3b 3d 3e 3f
+    44 45 4a 4b 4c 4d 4e 4f
+    59 5a 5b 5c 5d 5e 5f
+    6d 6e 6f
+    71
+    86 87 88 89 8a 8b 8c 8d 8e 8f
+    ab ac ae af
+    b0 ba bb
+    c1 c2
+    db dc dd de df
+  -->
+  <Character>
+    <Object id="Forgotten Archmage of Flame" ext="true">
+      <Enemy/>
+      <Class>Character</Class>
+      <RemoteTexture>
+        <Instance>production</Instance>
+        <Id>forgotten_archmage_of_flame</Id>
+      </RemoteTexture>
+      <HitSound>monster/abyss_demons_hit</HitSound>
+      <DeathSound>monster/abyss_demons_death</DeathSound>
+      <Size>150</Size>
+      <MaxHitPoints>5000</MaxHitPoints>
+      <Defense>30</Defense>
+      <Projectile id="0">
+        <ObjectId>Fire Mystic Shot</ObjectId>
+        <Damage>200</Damage>
+        <Speed>50</Speed>
+        <LifetimeMS>10000</LifetimeMS>
+        <PassesCover/>
+      </Projectile>
+    </Object>
+  </Character>
+  
+  <Item>
+    <ItemGroup type="testing">
+      <Object id="Staff of Someone" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj5</File>
+          <Index>0x70</Index>
+        </Texture>
+        <SlotType>17</SlotType>
+        <Description>A OP staff of Someone.</Description>
+        <RateOfFire>0.35</RateOfFire>
+        <Sound>weapon/fire_wand</Sound>
+        <Projectile>
+          <ObjectId>Anatis</ObjectId>
+          <Speed>100</Speed>
+          <MinDamage>5000</MinDamage>
+          <MaxDamage>10000</MaxDamage>
+          <LifetimeMS>5000</LifetimeMS>
+          <Size>75</Size>
+          <PassesCover/>
+          <MultiHit/>
+        </Projectile>
+        <BagType>4</BagType>
+        <NumProjectiles>10</NumProjectiles>
+        <ArcGap>36</ArcGap>
+        <OldSound>magicShoot</OldSound>
+        <Soulbound/>
+      </Object>
+      
+      <Object id="Robe of Someone" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj3</File>
+          <Index>0x86</Index>
+        </Texture>
+        <SlotType>14</SlotType>
+        <Description>The invincible robe of Someone</Description>
+        <ActivateOnEquip stat="21" amount="100">IncrementStat</ActivateOnEquip>
+        <BagType>2</BagType>
+        <FameBonus>5</FameBonus>
+        <Soulbound/>
+      </Object>
+      
+      <Object id="Star of Invincible" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiProjs</File>
+          <Index>0x5e</Index>
+        </Texture>
+        <SlotType>10</SlotType>
+        <Tier>4</Tier>
+        <Description>Super Power!</Description>
+        <Sound>use_potion</Sound>
+        <InvUse/>
+        <Activate effect="Invulnerable" duration="60">ConditionEffectSelf</Activate>
+        <Activate>RemoveNegativeConditionsSelf</Activate>
+        <BagType>4</BagType>
+        <Soulbound/>
+      </Object>
+      
+      <Object id="Kitty" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <AnimatedTexture>
+          <File>chars8x8rPets1</File>
+          <Index>0x02</Index>
+        </AnimatedTexture>
+        <SlotType>11</SlotType>
+        <Description>Almighty Kitty!</Description>
+        <Sound>spell/magic_nova</Sound>
+        <Projectile>
+          <ObjectId>Rainbow Magic Star Super</ObjectId>
+          <Speed>160</Speed>
+          <MinDamage>150</MinDamage>
+          <MaxDamage>200</MaxDamage>
+          <LifetimeMS>1000</LifetimeMS>
+          <PassesCover/>
+          <MultiHit/>
+        </Projectile>
+        <Usable/>
+        <BagType>4</BagType>
+        <MpCost>0</MpCost>
+        <Activate effect="Invisible" duration="10">ConditionEffectSelf</Activate>
+        <Activate maxDistance="20">Teleport</Activate>
+        <Activate>BulletNova</Activate>
+        <Soulbound/>
+      </Object>
+      
+      <Object id="Potion of Maxy" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj2</File>
+          <Index>0x35</Index>
+        </Texture>
+        <SlotType>10</SlotType>
+        <Tier>4</Tier>
+        <Description>A tasty, yummy, delicious extract of various stat potions.</Description>
+        <Sound>use_potion</Sound>
+        <Activate stat="20" amount="1000">IncrementStat</Activate>
+        <Activate stat="21" amount="1000">IncrementStat</Activate>
+        <Activate stat="22" amount="1000">IncrementStat</Activate>
+        <Activate stat="26" amount="1000">IncrementStat</Activate>
+        <Activate stat="27" amount="1000">IncrementStat</Activate>
+        <Activate stat="28" amount="1000">IncrementStat</Activate>
+        <Activate stat="0" amount="1000">IncrementStat</Activate>
+        <Activate stat="3" amount="1000">IncrementStat</Activate>
+        <Consumable/>
+        <Potion/>
+        <BagType>4</BagType>
+      </Object>
+    </ItemGroup>
+    <ItemGroup type="ability" tier="7">
+      <Object id="Souleater Skull" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x07</Index>
+        </Texture>
+        <SlotType>19</SlotType>
+        <Tier>7</Tier>
+        <Description>A red skull, stained with the blood of only a portion of its victims.</Description>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>160</MpCost>
+        <Activate radius="4" totalDamage="175">VampireBlast</Activate>
+      </Object>
+
+      <Object id="Mobstopper Trap" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x17</Index>
+        </Texture>
+        <SlotType>20</SlotType>
+        <Tier>7</Tier>
+        <Description>Known in the ancient world to be strong against the most powerful armies in existence.</Description>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>160</MpCost>
+        <Activate radius="7" totalDamage="350" condDuration="6">Trap</Activate>
+      </Object>
+
+      <Object id="Cloak of Dimensions" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x27</Index>
+        </Texture>
+        <SlotType>13</SlotType>
+        <Tier>7</Tier>
+        <Description>A velvet cloak that sends the user into a different dimension itself.</Description>
+        <Sound>spell/fire_nova</Sound>
+        <ActivateOnEquip stat="22" amount="6">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="5">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>90</MpCost>
+        <Activate effect="Invisible" duration="6">ConditionEffectSelf</Activate>
+        <Cooldown>7</Cooldown>
+      </Object>
+
+      <Object id="Bloodorc Quiver" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x37</Index>
+        </Texture>
+        <SlotType>15</SlotType>
+        <Tier>7</Tier>
+        <Description>A one-of-a-kind quiver forged by Bloodorcs to pierce through the mightiest demons.</Description>
+        <Sound>spell/fire_spray</Sound>
+        <Projectile>
+          <ObjectId>Red Arrow</ObjectId>
+          <Speed>150</Speed>
+          <MinDamage>320</MinDamage>
+          <MaxDamage>390</MaxDamage>
+          <LifetimeMS>1000</LifetimeMS>
+          <Size>150</Size>
+          <ConditionEffect duration="3.5">Paralyzed</ConditionEffect>
+          <MultiHit/>
+          <PassesCover/>
+          <ParticleTrail/>
+        </Projectile>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="6">IncrementStat</ActivateOnEquip>
+        <ConditionEffect duration="3.5">Paralyzed</ConditionEffect>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>80</MpCost>
+        <Activate>Shoot</Activate>
+      </Object>
+
+      <Object id="Space Deterioration Spell" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x47</Index>
+        </Texture>
+        <SlotType>11</SlotType>
+        <Tier>7</Tier>
+        <Description>Harnesses the power of time and space itself into an extremely harmful burst.</Description>
+        <Sound>spell/magic_nova</Sound>
+        <Projectile>
+          <ObjectId>White Bolt</ObjectId>
+          <Speed>160</Speed>
+          <MinDamage>95</MinDamage>
+          <MaxDamage>180</MaxDamage>
+          <LifetimeMS>1000</LifetimeMS>
+        </Projectile>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>90</MpCost>
+        <Activate>BulletNova</Activate>
+      </Object>
+
+      <Object id="Tome of the Fountains" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x57</Index>
+        </Texture>
+        <SlotType>4</SlotType>
+        <Tier>7</Tier>
+        <Description>Legends say that the fountains of the Nexus were all made out of this one book.</Description>
+        <Sound>spell/major_heal</Sound>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>90</MpCost>
+        <Activate range="9" amount="350">HealNova</Activate>
+      </Object>
+
+      <Object id="Helm of the Holy Warrior" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x67</Index>
+        </Texture>
+        <SlotType>16</SlotType>
+        <Tier>7</Tier>
+        <Description>A tough, reinforced helm only gifted to warriors who fight in self-defense.</Description>
+        <ActivateOnEquip stat="21" amount="12">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>90</MpCost>
+        <Activate effect="Berserk" duration="6.5" range="4.5">ConditionEffectAura</Activate>
+        <Activate effect="Speedy" duration="6.5">ConditionEffectSelf</Activate>
+        <Cooldown>7.5</Cooldown>
+      </Object>
+
+      <Object id="Magma Shield" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x77</Index>
+        </Texture>
+        <SlotType>5</SlotType>
+        <Tier>7</Tier>
+        <Description>A tough, steel shield coated with rough, hot magma rock that burns all enemies who dare approach it.</Description>
+        <Sound>spell/fire_spray</Sound>
+        <Projectile>
+          <ObjectId>Silver Shield</ObjectId>
+          <Speed>160</Speed>
+          <MinDamage>330</MinDamage>
+          <MaxDamage>390</MaxDamage>
+          <LifetimeMS>200</LifetimeMS>
+          <Size>140</Size>
+          <ConditionEffect duration="3.5">Stunned</ConditionEffect>
+          <MultiHit/>
+          <PassesCover/>
+          <ParticleTrail/>
+        </Projectile>
+        <ActivateOnEquip stat="21" amount="16">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <ConditionEffect duration="3.5">Stunned</ConditionEffect>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>105</MpCost>
+        <Activate>Shoot</Activate>
+        <NumProjectiles>6</NumProjectiles>
+      </Object>
+
+      <Object id="1940s Orb" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x97</Index>
+        </Texture>
+        <SlotType>21</SlotType>
+        <Tier>7</Tier>
+        <Description>A devilish orb that traps your foes in the 1940s for 9 seconds!</Description>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>90</MpCost>
+        <Activate duration="9">StasisBlast</Activate>
+      </Object>
+
+      <Object id="Toothpaste Poison" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x87</Index>
+        </Texture>
+        <SlotType>18</SlotType>
+        <Tier>7</Tier>
+        <Description>Instead of using it to toughen up your immune system, you decide to give your foes a taste of it. It's even worse than rotten milk.</Description>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>125</MpCost>
+        <Activate radius="5.5" totalDamage="1100" duration="8">PoisonGrenade</Activate>
+      </Object>
+
+      <Object id="Seal of Mass Power" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0xa7</Index>
+        </Texture>
+        <SlotType>12</SlotType>
+        <Tier>7</Tier>
+        <Description>This seal is said to contain an amount of power too extreme for one to handle.</Description>
+        <Sound>spell/light_heal</Sound>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>100</MpCost>
+        <Activate effect="Healing" duration="11" range="7.5">ConditionEffectAura</Activate>
+        <Activate effect="Damaging" duration="11" range="7.5">ConditionEffectAura</Activate>
+      </Object>
+
+      <Object id="Prism of the Soul Stealer" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0xb7</Index>
+        </Texture>
+        <SlotType>22</SlotType>
+        <Tier>7</Tier>
+        <Description>A prism once used to take control of his enemies souls, causing them to forever wander in search of the illusion they saw.</Description>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>90</MpCost>
+        <Activate duration="6">Decoy</Activate>
+        <Activate maxDistance="20">Teleport</Activate>
+      </Object>
+
+      <Object id="Scepter of the Grand Sorcerer" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0xc7</Index>
+        </Texture>
+        <SlotType>23</SlotType>
+        <Tier>7</Tier>
+        <Description>A bloodwef- I mean, blue scepter adorned with sapphires, used by an ancient sect of masterful wiz- I mean, sorcerers.</Description>
+        <Sound>spell/magic_nova</Sound>
+        <ActivateOnEquip stat="26" amount="3">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="3">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>5</FameBonus>
+        <MpCost>90</MpCost>
+        <Activate totalDamage="230" maxTargets="9">Lightning</Activate>
+      </Object>
+    </ItemGroup>
+    <ItemGroup type="ability" tier="8">
+      <Object id="Skull of the Undead King" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x08</Index>
+        </Texture>
+        <SlotType>19</SlotType>
+        <Tier>8</Tier>
+        <Description>A skull sporting a crown from its past necrotic king who died to the extent of his own power.</Description>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>180</MpCost>
+        <Activate radius="4" totalDamage="200" condEffect="Sick" condDuration="3">VampireBlast</Activate>
+      </Object>
+      
+      <Object id="Azure Trap" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x18</Index>
+        </Texture>
+        <SlotType>20</SlotType>
+        <Tier>8</Tier>
+        <Description>The strongest trap ever created. Some say it stopped a giant meteor from crashing into the planet.</Description>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>180</MpCost>
+        <Activate radius="8" totalDamage="400" condEffect="Paralyzed" condDuration="8">Trap</Activate>
+        <ConditionEffect duration="4">Sick</ConditionEffect>
+      </Object>
+      
+      <Object id="Cloak of the Phantom" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x28</Index>
+        </Texture>
+        <SlotType>13</SlotType>
+        <Tier>8</Tier>
+        <Description>A cloak once worn by a fiendish Phantom. Their victims never even had time to notice they were being attacked.</Description>
+        <Sound>spell/fire_nova</Sound>
+        <ActivateOnEquip stat="22" amount="8">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="7">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>95</MpCost>
+        <Activate effect="Invisible" duration="6.5">ConditionEffectSelf</Activate>
+        <Activate effect="Speedy" duration="5.5">ConditionEffectSelf</Activate>
+        <Cooldown>7</Cooldown>
+      </Object>
+      
+      <Object id="Quiver of Artemis" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x38</Index>
+        </Texture>
+        <SlotType>15</SlotType>
+        <Tier>8</Tier>
+        <Description>A lime-green quiver woven with green cloth that gleams with the power of Artemis.</Description>
+        <Sound>spell/fire_spray</Sound>
+        <Projectile>
+          <ObjectId>Green Bolt</ObjectId>
+          <Speed>150</Speed>
+          <MinDamage>350</MinDamage>
+          <MaxDamage>420</MaxDamage>
+          <LifetimeMS>1000</LifetimeMS>
+          <Size>150</Size>
+          <ConditionEffect duration="4">Paralyzed</ConditionEffect>
+          <ConditionEffect duration="3">Bleeding</ConditionEffect>
+          <MultiHit/>
+          <PassesCover/>
+          <ParticleTrail/>
+        </Projectile>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="28" amount="8">IncrementStat</ActivateOnEquip>
+        <ConditionEffect duration="4">Paralyzed</ConditionEffect>
+        <ConditionEffect duration="3">Bleeding</ConditionEffect>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>85</MpCost>
+        <Activate>Shoot</Activate>
+      </Object>
+      
+      <Object id="Spell of the Eternal Void" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x48</Index>
+        </Texture>
+        <SlotType>11</SlotType>
+        <Tier>8</Tier>
+        <Description>Shoots a powerful burst of death itself onto your foes.</Description>
+        <Sound>spell/magic_nova</Sound>
+        <Projectile>
+          <ObjectId>Black Magic</ObjectId>
+          <Speed>160</Speed>
+          <MinDamage>120</MinDamage>
+          <MaxDamage>210</MaxDamage>
+          <LifetimeMS>1000</LifetimeMS>
+          <MultiHit/>
+        </Projectile>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>95</MpCost>
+        <Activate>BulletNova</Activate>
+      </Object>
+      
+      <Object id="Tome of the Ancients" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x58</Index>
+        </Texture>
+        <SlotType>4</SlotType>
+        <Tier>8</Tier>
+        <Description>A mighty tome used by the ancients themselves.</Description>
+        <Sound>spell/major_heal</Sound>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>95</MpCost>
+        <Activate range="10" amount="400">HealNova</Activate>
+      </Object>
+      
+      <Object id="Helm of the Leviathan General" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x68</Index>
+        </Texture>
+        <SlotType>16</SlotType>
+        <Tier>8</Tier>
+        <Description>A great warrior who puts in major sacrifice will also take out major amounts of their foes.</Description>
+        <ActivateOnEquip stat="21" amount="16">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>95</MpCost>
+        <Activate effect="Berserk" duration="7" range="4.5">ConditionEffectAura</Activate>
+        <Activate effect="Speedy" duration="7">ConditionEffectSelf</Activate>
+        <Activate effect="Damaging" duration="7">ConditionEffectSelf</Activate>
+        <Activate effect="Sick" duration="4">ConditionEffectSelf</Activate>
+        <Cooldown>7.5</Cooldown>
+      </Object>
+      
+      <Object id="Shield of Death" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x78</Index>
+        </Texture>
+        <SlotType>5</SlotType>
+        <Tier>8</Tier>
+        <Description>Whoever is targeted by this shield is guaranteed doom. Whoever wields this shield is guaranteed life.</Description>
+        <Sound>spell/fire_spray</Sound>
+        <Projectile>
+          <ObjectId>LavaBombBlast</ObjectId>
+          <Speed>160</Speed>
+          <MinDamage>360</MinDamage>
+          <MaxDamage>420</MaxDamage>
+          <LifetimeMS>200</LifetimeMS>
+          <Size>140</Size>
+          <ConditionEffect duration="4">Stunned</ConditionEffect>
+          <ConditionEffect duration="4">Bleeding</ConditionEffect>
+          <MultiHit/>
+          <PassesCover/>
+          <ParticleTrail/>
+        </Projectile>
+        <ActivateOnEquip stat="21" amount="20">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <ConditionEffect duration="4">Stunned</ConditionEffect>
+        <ConditionEffect duration="4">Bleeding</ConditionEffect>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>110</MpCost>
+        <Activate>Shoot</Activate>
+        <NumProjectiles>7</NumProjectiles>
+      </Object>
+      
+      <Object id="Fury Orb" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x98</Index>
+        </Texture>
+        <SlotType>21</SlotType>
+        <Tier>8</Tier>
+        <Description>An orb, made out of pure fury.</Description>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>95</MpCost>
+        <Activate totalDamage="300" duration="9">StasisBlast</Activate>
+      </Object>
+      
+      <Object id="Bile Poison" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0x88</Index>
+        </Texture>
+        <SlotType>18</SlotType>
+        <Tier>8</Tier>
+        <Description>Poison harvested from the floors of Oryx's Wine Cellar. It seems to work pretty well.</Description>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>150</MpCost>
+        <Activate radius="6" totalDamage="1500" condEffect="Sick" condDuration="6" duration="8">PoisonGrenade</Activate>
+      </Object>
+      
+      <Object id="Seal of War" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0xa8</Index>
+        </Texture>
+        <SlotType>12</SlotType>
+        <Tier>8</Tier>
+        <Description>A seal, painted pure red with the blood of those who stand before it.</Description>
+        <Sound>spell/light_heal</Sound>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>110</MpCost>
+        <Activate effect="Healing" duration="12" range="8">ConditionEffectAura</Activate>
+        <Activate effect="Damaging" duration="12" range="8">ConditionEffectAura</Activate>
+      </Object>
+      
+      <Object id="Prism of the Bloody Surprise" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0xb8</Index>
+        </Texture>
+        <SlotType>22</SlotType>
+        <Tier>8</Tier>
+        <Description>None even know about this prism. Nobody has ever been found using it. They're dead before they see it.</Description>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>100</MpCost>
+        <Activate duration="8">Decoy</Activate>
+        <Activate maxDistance="30">Teleport</Activate>
+        <Activate effect="Invisible" duration="3">ConditionEffectSelf</Activate>
+      </Object>
+      
+      <Object id="Scepter of Vorv" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj6</File>
+          <Index>0xc8</Index>
+        </Texture>
+        <SlotType>23</SlotType>
+        <Tier>8</Tier>
+        <Description>Used by one of the greatest heroes of all time, Vorv.</Description>
+        <Sound>spell/magic_nova</Sound>
+        <ActivateOnEquip stat="26" amount="4">IncrementStat</ActivateOnEquip>
+        <ActivateOnEquip stat="27" amount="4">IncrementStat</ActivateOnEquip>
+        <Usable/>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <MpCost>95</MpCost>
+        <Activate totalDamage="280" effect="Dazed" duration="5" maxTargets="10">Lightning</Activate>
+      </Object>
+    </ItemGroup>
+    <ItemGroup type="key">
+      <Object id="Gauntlet Key" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <Texture>
+          <File>lofiObj2</File>
+          <Index>0x75</Index>
+        </Texture>
+        <SlotType>10</SlotType>
+        <Description>A key which opens an entrance to a Gauntlet.</Description>
+        <Sound>use_key</Sound>
+        <Consumable/>
+        <Soulbound/>
+        <Activate id="Gauntlet Portal" ext="true">Create</Activate>
+      </Object>
+    </ItemGroup>
+    <ItemGroup type="ut">
+      <Object id="Staff of the Abyss" ext="true">
+        <Class>Equipment</Class>
+        <Item/>
+        <RemoteTexture>
+          <Instance>production</Instance>
+          <Id>staff_of_the_abyss</Id>
+        </RemoteTexture>
+        <SlotType>17</SlotType>
+        <Description>As the name suggested, this staff came from the abyss, really.</Description>
+        <RateOfFire>2</RateOfFire>
+        <Sound>weapon/wand_of_death</Sound>
+        <Projectile>
+          <ObjectId>Dark Fire</ObjectId>
+          <Speed>180</Speed>
+          <MinDamage>55</MinDamage>
+          <MaxDamage>75</MaxDamage>
+          <LifetimeMS>475</LifetimeMS>
+          <Amplitude>0.5</Amplitude>
+          <Frequency>2</Frequency>
+        </Projectile>
+        <BagType>4</BagType>
+        <FameBonus>6</FameBonus>
+        <NumProjectiles>2</NumProjectiles>
+        <ArcGap>0</ArcGap>
+        <OldSound>magicShoot</OldSound>
+      </Object>
+    </ItemGroup>
+  </Item>
+  <Environment>
+    <Object id="Gauntlet Portal" ext="true">
+      <Class>Portal</Class>
+      <IntergamePortal/>
+      <DungeonName>The Gauntlet</DungeonName>
+      <Texture>
+        <File>lofiEnvironment</File>
+        <Index>0x5b</Index>
+      </Texture>
+    </Object>
+  </Environment>
+  <Projectile>
+    <Object id="Flame Mystic Shot" ext="true">
+      <Class>Projectile</Class>
+      <Size>50</Size>
+      <RemoteTexture>
+        <Instance>production</Instance>
+        <Id>fire_mystic_shot</Id>
+      </RemoteTexture>
+    </Object>
+    <Object id="Dark Fire" ext="true">
+      <Class>Projectile</Class>
+      <RemoteTexture>
+        <Instance>production</Instance>
+        <Id>dark_fire</Id>
+      </RemoteTexture>
+      <AngleCorrection>1</AngleCorrection>
+    </Object>
+  </Projectile>
+  
+  <Textile>
+
+  </Textile>
+  
+  <Misc>
+
+  </Misc>
+  
+  <Tile>
+
+    <Ground type="0x08" id="Firey Floor" ext="true">
+      <RemoteTexture>
+        <Instance>production</Instance>
+        <Id>firey_floor</Id>
+      </RemoteTexture>
+    </Ground>
+    
+  </Tile>
+
+</Addition>
